@@ -26,19 +26,7 @@ ORBIT is a custom-built, modern video sharing application designed with a sleek,
 1. Clone the repository
 2. Install dependencies: `npm install`
 3. Create a `.env` file in the root directory and add your credentials:
-   ```env
-   PORT=8000
-   MONGODB_URI=your_mongodb_connection_string
-   CORS_ORIGIN=*
-   ACCESS_TOKEN_SECRET=your_jwt_secret
-   ACCESS_TOKEN_EXPIRY=1d
-   REFRESH_TOKEN_SECRET=your_refresh_secret
-   REFRESH_TOKEN_EXPIRY=10d
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
-   ```
-4. Start the development server: `npm run dev`
+  t server: `npm run dev`
 5. Open `http://localhost:8000` in your browser.
 
 ---
