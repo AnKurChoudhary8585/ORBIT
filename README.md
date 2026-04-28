@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ORBIT 🌌 
 **A Premium, Full-Stack Video Hosting Platform**
 
@@ -43,3 +44,6 @@ ORBIT is a custom-built, modern video sharing application designed with a sleek,
 
 ---
 *Crafted By Ankur*
+=======
+# ORBIT-Video-Platform
+>>>>>>> 39decdb1fefb51c0c2ea2636aa8056ba79d9a8ff
