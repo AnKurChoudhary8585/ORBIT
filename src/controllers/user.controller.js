@@ -25,7 +25,12 @@ const registerUser = asyncHandler(async (req, res) => {
     if ([fullName, email, userName, password].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
-    const existedUser = await User.findOne({ $or: [{ userName }, { email }] });
+    const existedUser = await User.findOne({ 
+        $or: [
+            { userName: userName?.toLowerCase() }, 
+            { email: email?.toLowerCase() }
+        ] 
+    });
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exists");
     }
@@ -43,13 +48,13 @@ const registerUser = asyncHandler(async (req, res) => {
         if (!avatar) {
             throw new ApiError(400, "Avatar upload failed. Check your Cloudinary API keys in .env!");
         }
-        avatarUrl = avatar.url;
+        avatarUrl = avatar.url || avatar.secure_url;
     }
 
     let coverImageUrl = "";
     if (coverImageLocalPath) {
         const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-        coverImageUrl = coverImage?.url || "";
+        coverImageUrl = coverImage?.url || coverImage?.secure_url || "";
     }
 
     const user = await User.create({
@@ -74,7 +79,12 @@ const loginUser = asyncHandler(async (req, res) => {
     if (!userName && !email) {
         throw new ApiError(400, "username or email is required");
     }
-    const user = await User.findOne({ $or: [{userName}, {email}] });
+    const user = await User.findOne({ 
+        $or: [
+            { userName: userName?.toLowerCase() }, 
+            { email: email?.toLowerCase() }
+        ] 
+    });
     if (!user) throw new ApiError(404, "User does not exist");
     
     const isPasswordValid = await user.isPasswordCorrect(password);
@@ -140,11 +150,15 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => { return res.status(200).json(new ApiResponse(200, req.user, "Current user fetched successfully")); });
 const updateAccountDetails = asyncHandler(async (req, res) => {
     const { fullName, email } = req.body;
-    if (!fullName || !email) throw new ApiError(400, "All fields are required");
+    if (!fullName && !email) throw new ApiError(400, "At least one field is required to update");
+
+    const updateFields = {};
+    if (fullName) updateFields.fullName = fullName;
+    if (email) updateFields.email = email;
 
     const user = await User.findByIdAndUpdate(
         req.user?._id,
-        { $set: { fullName, email } },
+        { $set: updateFields },
         { new: true, runValidators: true }
     ).select("-password -refreshToken");
 
@@ -155,11 +169,11 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     if (!avatarLocalPath) throw new ApiError(400, "Avatar file is missing");
     
     const avatar = await uploadOnCloudinary(avatarLocalPath);
-    if (!avatar.url) throw new ApiError(400, "Error while uploading on avatar");
+    if (!avatar || (!avatar.url && !avatar.secure_url)) throw new ApiError(400, "Error while uploading on avatar");
     
     const user = await User.findByIdAndUpdate(
         req.user?._id, 
-        { $set: { avatar: avatar.url } }, 
+        { $set: { avatar: avatar.url || avatar.secure_url } }, 
         { new: true }
     ).select("-password -refreshToken");
     
@@ -171,11 +185,11 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     if (!coverImageLocalPath) throw new ApiError(400, "Cover image file is missing");
     
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-    if (!coverImage.url) throw new ApiError(400, "Error while uploading on cover image");
+    if (!coverImage || (!coverImage.url && !coverImage.secure_url)) throw new ApiError(400, "Error while uploading on cover image");
     
     const user = await User.findByIdAndUpdate(
         req.user?._id, 
-        { $set: { coverImage: coverImage.url } }, 
+        { $set: { coverImage: coverImage.url || coverImage.secure_url } }, 
         { new: true }
     ).select("-password -refreshToken");
     

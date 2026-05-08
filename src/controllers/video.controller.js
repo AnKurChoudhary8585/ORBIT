@@ -57,8 +57,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
         title,
         description,
         duration: videoUpload.duration || 0,
-        videoFile: videoUpload.url,
-        thumbnail: thumbnailUpload.url,
+        videoFile: videoUpload.url || videoUpload.secure_url,
+        thumbnail: thumbnailUpload.url || thumbnailUpload.secure_url,
         owner: req.user._id,
         isPublished: true
     });
@@ -86,7 +86,9 @@ const updateVideo = asyncHandler(async (req, res) => {
     const thumbnailLocalPath = req.file?.path;
     if (thumbnailLocalPath) {
         const thumbnailUpload = await uploadOnCloudinary(thumbnailLocalPath);
-        if (thumbnailUpload?.url) updateFields.thumbnail = thumbnailUpload.url;
+        if (thumbnailUpload?.url || thumbnailUpload?.secure_url) {
+            updateFields.thumbnail = thumbnailUpload.url || thumbnailUpload.secure_url;
+        }
     }
 
     const video = await Video.findOneAndUpdate(
