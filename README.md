@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 # ORBIT 🌌 
 **A Premium, Full-Stack Video Hosting Platform**
 
 ORBIT is a custom-built, modern video sharing application designed with a sleek, glassmorphic "space-tech" aesthetic. It provides a robust backend architecture integrated with seamless cloud media storage, wrapped in a responsive, single-page application frontend.
 
-## 🚀 Key Features
+🚀 Key Features
 
 * **Complete Authentication System:** Secure login and registration using HTTP-only JWT cookies (Access & Refresh tokens).
 * **Cloud Media Management:** Direct integration with Cloudinary for handling large video chunking, auto-compression, and thumbnail storage.
@@ -12,13 +11,11 @@ ORBIT is a custom-built, modern video sharing application designed with a sleek,
 * **Interactive Custom Video Player:** Watch videos directly in an immersive, overlay modal without leaving the page.
 * **User Engagement:** Fully functional Like/Dislike logic and Channel Subscription endpoints.
 * **Real-time Dashboard:** A classy profile dropdown panel that instantly fetches your live subscriber and following counts, alongside an interactive avatar uploader.
-* **Modern UI/UX:** Built without heavy frontend frameworks—utilizing vanilla JavaScript and advanced CSS variables for a high-performance, glassmorphic design.
 
 ## 🛠️ Tech Stack
-
-* **Frontend:** HTML5, CSS3 (Glassmorphism), Vanilla JavaScript ES6+
+* **Frontend:** HTML5, CSS3 (Glassmorphism), Js
 * **Backend:** Node.js, Express.js
-* **Database:** MongoDB (with Mongoose Aggregation Pipelines)
+* **Database:** MongoDB 
 * **Media Storage:** Cloudinary & Multer
 * **Security:** bcrypt (password hashing), jsonwebtoken (JWT), CORS
 
@@ -32,6 +29,3 @@ ORBIT is a custom-built, modern video sharing application designed with a sleek,
 
 ---
 *Crafted By Ankur*
-=======
-# ORBIT-Video-Platform
->>>>>>> 39decdb1fefb51c0c2ea2636aa8056ba79d9a8ff
