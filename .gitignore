@@ -1,4 +1,25 @@
+# Dependency directories
 node_modules/
-dist/
-public/temp/
+
+# Local environment variables (Contains secrets!)
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Netlify directories
+.netlify/
+
+# Local temporary uploads
+public/temp/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
